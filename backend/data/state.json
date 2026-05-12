@@ -1,0 +1,60 @@
+{
+  "artists": [
+    {
+      "id": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
+      "name": "Kai angel",
+      "image": "/artists/kai-angel.jpg"
+    }
+  ],
+  "tracks": [
+    {
+      "id": "8b702647-3630-4c63-bb3f-1ece0564b4c4",
+      "title": "Limousine Music",
+      "artistId": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
+      "answer": "Limousine Music",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/eb/92/35/eb9235ec-ac6d-dea5-8ebd-9bb9a194f545/mzaf_4931147103712094873.plus.aac.p.m4a"
+    },
+    {
+      "id": "10b48486-f687-47ea-8a31-fdfa1fa0232e",
+      "title": "welcome to forever",
+      "artistId": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
+      "answer": "welcome to forever",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/93/75/77/93757752-409e-1e9e-02da-af6f69515c54/mzaf_4440295897619256944.plus.aac.p.m4a"
+    },
+    {
+      "id": "3a1b32d0-98e3-48f5-96d4-4275ea59a428",
+      "title": "0 tears",
+      "artistId": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
+      "answer": "0 tears",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/f3/b0/92/f3b09222-f376-cd26-7ca2-638ac81a3310/mzaf_1151974867091945083.plus.aac.p.m4a"
+    },
+    {
+      "id": "da151ae1-f0ff-4389-95f6-9f718e009298",
+      "title": "ANGRYY",
+      "artistId": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
+      "answer": "ANGRYY",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/3a/1c/e6/3a1ce6de-bfde-6938-77cb-48cb667adb53/mzaf_9914732406348300373.plus.aac.p.m4a"
+    },
+    {
+      "id": "f71e3123-f192-427a-8786-03b3398877fe",
+      "title": "~boo~",
+      "artistId": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
+      "answer": "~boo~",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/aa/8f/d3/aa8fd317-9d71-51a3-343a-7bed461ea73d/mzaf_1447582187318596184.plus.aac.p.m4a"
+    }
+  ],
+  "settings": {
+    "rounds": 5,
+    "time": 15,
+    "name": "Игрок"
+  },
+  "leaderboard": [
+    {
+      "name": "Игрок",
+      "score": 0
+    }
+  ],
+  "game": {
+    "score": 0
+  }
+}
