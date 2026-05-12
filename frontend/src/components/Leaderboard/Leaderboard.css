@@ -1,0 +1,17 @@
+.leaderboard {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.leaderboard div {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.leaderboard div:nth-child(1) {
+  color: var(--accent);
+  font-weight: bold;
+}

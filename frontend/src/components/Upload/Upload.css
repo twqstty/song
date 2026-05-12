@@ -1,0 +1,374 @@
+.upload {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+}
+
+.upload__hero {
+  margin-bottom: 28px;
+}
+
+.upload__eyebrow {
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.upload__hero h1 {
+  margin: 0 0 12px;
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 0.96;
+}
+
+.upload__lead {
+  max-width: 640px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.upload__toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.upload__artist-builder {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.upload__artist-form,
+.upload__assign,
+.upload__track-form {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  background: rgba(19, 19, 26, 0.88);
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+}
+
+.upload__artist-form label,
+.upload__assign label,
+.upload__artist-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upload__track-form {
+  margin-bottom: 24px;
+}
+
+.upload__track-form-note {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.upload__catalog-list {
+  display: grid;
+  gap: 14px;
+}
+
+.upload__catalog-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.upload__catalog-head {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.upload__catalog-artwork {
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.upload__catalog-card strong {
+  font-size: 20px;
+}
+
+.upload__catalog-card p {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.upload__catalog-source {
+  display: inline-flex;
+  margin-top: 10px;
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.upload__helper-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.upload__dropzone {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px;
+  border: 2px dashed var(--border);
+  background: rgba(19, 19, 26, 0.88);
+  border-radius: 26px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.upload__dropzone:hover {
+  border-color: rgba(200, 255, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.upload__dropzone input[type="file"] {
+  display: none;
+}
+
+.upload__dropzone span {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.upload__dropzone small,
+.upload__summary span,
+.upload__artist-form span,
+.upload__assign span,
+.upload__fields span,
+.upload__answer span,
+.upload__answer small,
+.upload__index,
+.upload__empty p {
+  color: var(--muted);
+}
+
+.upload__summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.upload__summary div,
+.upload__empty,
+.upload__card,
+.upload__artist-card {
+  border: 1px solid var(--border);
+  background: rgba(19, 19, 26, 0.88);
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+}
+
+.upload__summary div {
+  padding: 22px;
+}
+
+.upload__summary strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 28px;
+}
+
+.upload__list {
+  display: grid;
+  gap: 18px;
+}
+
+.upload__artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.upload__artist-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.upload__artist-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.upload__artist-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.upload__card {
+  padding: 22px;
+}
+
+.upload__card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.upload__card-head h2,
+.upload__empty h2 {
+  margin: 6px 0 0;
+  font-size: 26px;
+}
+
+.upload__remove,
+.upload__ghost,
+.upload__primary,
+.upload__actions button {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.upload__remove {
+  padding: 12px 16px;
+  background: transparent;
+  color: var(--accent2);
+}
+
+.upload__ghost {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+}
+
+.upload__audio {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.upload__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.upload__fields label,
+.upload__answer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upload__fields input,
+.upload__fields select,
+.upload__answer input,
+.upload__artist-form input,
+.upload__artist-card input,
+.upload__assign select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  outline: none;
+}
+
+.upload__fields input:focus,
+.upload__fields select:focus,
+.upload__answer input:focus,
+.upload__artist-form input:focus,
+.upload__artist-card input:focus,
+.upload__assign select:focus {
+  border-color: rgba(200, 255, 0, 0.45);
+  box-shadow: 0 0 0 4px rgba(200, 255, 0, 0.08);
+}
+
+.upload__answer small {
+  font-size: 13px;
+}
+
+.upload__empty {
+  padding: 46px 24px;
+  text-align: center;
+}
+
+.upload__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.upload__actions--inline {
+  justify-content: flex-start;
+  margin-top: 0;
+}
+
+.upload__primary,
+.upload__actions button {
+  padding: 16px 26px;
+  background: var(--accent);
+  color: #0a0a0f;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 14px 34px rgba(200, 255, 0, 0.18);
+}
+
+@media (max-width: 900px) {
+  .upload__artist-builder,
+  .upload__toolbar,
+  .upload__fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .upload {
+    padding: 28px 16px 40px;
+  }
+
+  .upload__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .upload__card-head {
+    flex-direction: column;
+  }
+
+  .upload__actions {
+    justify-content: stretch;
+  }
+
+  .upload__actions button {
+    width: 100%;
+  }
+
+  .upload__catalog-head {
+    grid-template-columns: 1fr;
+  }
+
+  .upload__catalog-artwork {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}

@@ -1,0 +1,19 @@
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--surface);
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.notification.success {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.notification.error {
+  border-color: var(--accent2);
+  color: var(--accent2);
+}

@@ -1,0 +1,253 @@
+.game {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.game--artists {
+  max-width: 1120px;
+  text-align: left;
+}
+
+.game--empty {
+  max-width: 560px;
+}
+
+.game h1 {
+  margin: 0 0 12px;
+  font-size: clamp(34px, 5vw, 54px);
+}
+
+.game__hero {
+  margin-bottom: 28px;
+}
+
+.game__eyebrow {
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.game__topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+
+.game__topline strong {
+  color: var(--accent);
+}
+
+.game__hint {
+  max-width: 520px;
+  margin: 0 auto 24px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.game__artist-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.game__artist-toolbar input {
+  max-width: 420px;
+}
+
+.game__artist-toolbar span,
+.game__artist-copy span,
+.game__artist-pill p {
+  color: var(--muted);
+}
+
+.game__artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.game__artist-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  background: rgba(19, 19, 26, 0.9);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.game__artist-card:hover {
+  border-color: rgba(200, 255, 0, 0.35);
+}
+
+.game__artist-image,
+.game__artist-placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+}
+
+.game__artist-image {
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.game__artist-placeholder,
+.game__artist-pill-image--placeholder {
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(135deg, rgba(200, 255, 0, 0.26), rgba(255, 61, 110, 0.18)),
+    rgba(255, 255, 255, 0.04);
+  color: var(--text-h);
+  font-family: var(--heading);
+}
+
+.game__artist-placeholder {
+  font-size: 64px;
+}
+
+.game__artist-copy {
+  display: grid;
+  gap: 6px;
+}
+
+.game__artist-copy strong,
+.game__artist-pill strong {
+  font-size: 22px;
+  color: var(--text-h);
+}
+
+.game__empty-search {
+  padding: 36px 28px;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  background: rgba(19, 19, 26, 0.85);
+}
+
+.game__artist-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border-radius: 20px;
+  background: rgba(19, 19, 26, 0.88);
+  border: 1px solid var(--border);
+}
+
+.game__artist-pill-image {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.game__player {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.game__player button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  font-size: 24px;
+  cursor: pointer;
+  color: #0a0a0f;
+  box-shadow: 0 16px 36px rgba(200, 255, 0, 0.2);
+}
+
+.game__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+
+.game input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+}
+
+.game input:focus {
+  border-color: rgba(200, 255, 0, 0.45);
+  box-shadow: 0 0 0 4px rgba(200, 255, 0, 0.08);
+}
+
+.game__submit,
+.game__secondary {
+  width: auto;
+  height: auto;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-size: 16px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.game__submit {
+  min-width: 140px;
+  border: none;
+  background: var(--accent);
+  color: #0a0a0f;
+}
+
+.game__secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.game__change-artist {
+  margin-top: 18px;
+}
+
+@media (max-width: 640px) {
+  .game {
+    padding: 36px 16px;
+  }
+
+  .game__artist-toolbar,
+  .game__form {
+    grid-template-columns: 1fr;
+  }
+
+  .game__topline {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game__artist-toolbar {
+    display: grid;
+  }
+
+  .game__artist-pill {
+    width: 100%;
+    justify-content: center;
+    text-align: left;
+  }
+}
