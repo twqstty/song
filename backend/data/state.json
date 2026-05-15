@@ -2,8 +2,33 @@
   "artists": [
     {
       "id": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
-      "name": "Kai angel",
+      "name": "Kai Angel",
       "image": "/artists/kai-angel.jpg"
+    },
+    {
+      "id": "cc455c97-8ae5-4f5b-a9b5-80928bd3fbf1",
+      "name": "9mice",
+      "image": "/artists/mice.png"
+    },
+    {
+      "id": "5cbfba71-55f7-4759-98be-446b6c5fe4f2",
+      "name": "Playboy Carti",
+      "image": "/artists/carti.jpg"
+    },
+    {
+      "id": "2a09d8ba-068e-43a5-9a2d-c07675534093",
+      "name": "HERONWATER",
+      "image": "/artists/HERONWATER.jpg"
+    },
+    {
+      "id": "f1d6f121-58dc-496f-8daf-0f3253e22162",
+      "name": "Lil Peep",
+      "image": "/artists/peep.png"
+    },
+    {
+      "id": "503a19db-45ab-498f-be04-6029fff8c874",
+      "name": "Zxcursed",
+      "image": "/artists/zxcursed.jpg"
     }
   ],
   "tracks": [
@@ -41,20 +66,276 @@
       "artistId": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
       "answer": "~boo~",
       "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/aa/8f/d3/aa8fd317-9d71-51a3-343a-7bed461ea73d/mzaf_1447582187318596184.plus.aac.p.m4a"
+    },
+    {
+      "id": "07da4ca9-2260-4f74-ac5f-1daca98ed601",
+      "title": "Москва - Владивосток",
+      "artistId": "cc455c97-8ae5-4f5b-a9b5-80928bd3fbf1",
+      "answer": "Москва - Владивосток",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/5b/f5/0f/5bf50f44-21c8-af6d-75f6-c1baea32b99b/mzaf_8210116308552012983.plus.aac.p.m4a"
+    },
+    {
+      "id": "a2fb5ff0-d6c9-48e6-a326-7f3015d2d002",
+      "title": "sugar",
+      "artistId": "cc455c97-8ae5-4f5b-a9b5-80928bd3fbf1",
+      "answer": "sugar",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/f3/90/b3/f390b3ee-283b-d8df-0a0f-6681af54a8b7/mzaf_17751664694102821656.plus.aac.p.m4a"
+    },
+    {
+      "id": "a8ce324c-94bc-4854-8db7-69ced90a9136",
+      "title": "NEW-YORK",
+      "artistId": "cc455c97-8ae5-4f5b-a9b5-80928bd3fbf1",
+      "answer": "NEW-YORK",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/e1/d2/8c/e1d28cd6-0a90-0af1-1495-a59076c88dd1/mzaf_17746868008521929000.plus.aac.p.m4a"
+    },
+    {
+      "id": "0ac4fa5c-6cfd-4bcb-a740-a44598d7a4ba",
+      "title": "MMW",
+      "artistId": "cc455c97-8ae5-4f5b-a9b5-80928bd3fbf1",
+      "answer": "MMW",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/55/41/a6/5541a6a4-68d4-da0c-085d-f54e69760e87/mzaf_9351447129283559408.plus.aac.p.m4a"
+    },
+    {
+      "id": "820c7f29-70a8-4644-b457-4fb6bacce264",
+      "title": "acoustic",
+      "artistId": "cc455c97-8ae5-4f5b-a9b5-80928bd3fbf1",
+      "answer": "acoustic",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9d/b8/36/9db836fa-b0ea-c2d6-cb49-653471817476/mzaf_15782374324380348618.plus.aac.p.m4a"
+    },
+    {
+      "id": "5e4a7b23-5562-40b5-b810-778a6f001862",
+      "title": "CHAINSAW",
+      "artistId": "cc455c97-8ae5-4f5b-a9b5-80928bd3fbf1",
+      "answer": "CHAINSAW",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/4e/64/f7/4e64f70c-4a5f-1f1d-8940-f318a6b2bd5e/mzaf_18391349067707958158.plus.aac.p.m4a"
+    },
+    {
+      "id": "7f684647-f002-4e52-ba07-269ed4fcb625",
+      "title": "u+me",
+      "artistId": "cc455c97-8ae5-4f5b-a9b5-80928bd3fbf1",
+      "answer": "u+me",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/34/77/5f/34775f8c-1ed8-af0d-14d5-64b0542a38bf/mzaf_6335960506809597810.plus.aac.p.m4a"
+    },
+    {
+      "id": "8a3ad698-24a4-4d7a-bded-9201b4f1c571",
+      "title": "Popular (feat. Playboi Carti) [Music from the HBO Original Series The Idol]",
+      "artistId": "5cbfba71-55f7-4759-98be-446b6c5fe4f2",
+      "answer": "Popular (feat. Playboi Carti) [Music from the HBO Original Series The Idol]",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/39/8a/2e/398a2ec2-1b5e-1808-77f2-0a8976b1c448/mzaf_9444766139330891891.plus.aac.p.m4a"
+    },
+    {
+      "id": "e7a9ab6b-1dd9-45c1-baa1-425222ffa254",
+      "title": "ALL RED",
+      "artistId": "5cbfba71-55f7-4759-98be-446b6c5fe4f2",
+      "answer": "ALL RED",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/cc/a8/8c/cca88cb7-897c-4949-8ab5-98fddeca6302/mzaf_11222618061394467610.plus.aac.p.m4a"
+    },
+    {
+      "id": "4c4d1830-cf82-4d01-b682-04960a293108",
+      "title": "Flex Up",
+      "artistId": "5cbfba71-55f7-4759-98be-446b6c5fe4f2",
+      "answer": "Flex Up",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/64/52/0c/64520c00-87c8-98da-9531-d8a034afd0c5/mzaf_7672872643459606915.plus.aac.p.m4a"
+    },
+    {
+      "id": "6ef7347e-88a2-4136-8bd1-6ff2f4ded6b7",
+      "title": "FE!N (feat. Playboi Carti)",
+      "artistId": "5cbfba71-55f7-4759-98be-446b6c5fe4f2",
+      "answer": "FE!N (feat. Playboi Carti)",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/85/82/96/8582960b-2b19-b1eb-8179-b03be49f332b/mzaf_10214925442893249225.plus.aac.p.m4a"
+    },
+    {
+      "id": "e3aa7498-7caa-418b-9673-cf4946c1d95c",
+      "title": "Timeless",
+      "artistId": "5cbfba71-55f7-4759-98be-446b6c5fe4f2",
+      "answer": "Timeless",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9a/d4/f0/9ad4f06c-bf08-255f-8498-8e3d1d17e743/mzaf_7983135672228712033.plus.aac.p.m4a"
+    },
+    {
+      "id": "a55871d7-8ea0-47cf-bc73-0b932a171494",
+      "title": "Miss The Rage",
+      "artistId": "5cbfba71-55f7-4759-98be-446b6c5fe4f2",
+      "answer": "Miss The Rage",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/9d/fa/bf/9dfabf52-20a3-8c60-63a2-ee67169b8fbc/mzaf_986340465390174924.plus.aac.p.m4a"
+    },
+    {
+      "id": "b64afea9-2131-4b1b-accc-70353643833f",
+      "title": "EVIL J0RDAN",
+      "artistId": "5cbfba71-55f7-4759-98be-446b6c5fe4f2",
+      "answer": "EVIL J0RDAN",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/17/a6/d6/17a6d6df-9516-4e9b-d7d1-9a9481ce2c4e/mzaf_2238578093792048155.plus.aac.p.m4a"
+    },
+    {
+      "id": "ee470bd0-991f-405e-ac05-ee5efcf3c81c",
+      "title": "2 часа ночи",
+      "artistId": "2a09d8ba-068e-43a5-9a2d-c07675534093",
+      "answer": "2 часа ночи",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/8a/36/5b/8a365b7f-77ee-784d-dd46-59c41a9eb3cf/mzaf_11673995594113288981.plus.aac.p.m4a"
+    },
+    {
+      "id": "480d2a1c-c2f5-4b9c-8d2b-39f9fd7844c8",
+      "title": "Тайны",
+      "artistId": "2a09d8ba-068e-43a5-9a2d-c07675534093",
+      "answer": "Тайны",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/b1/65/a1/b165a18e-19b0-ee30-5924-2471570161f1/mzaf_11888469734754770082.plus.aac.p.m4a"
+    },
+    {
+      "id": "2183a208-226e-4ef9-bcf2-6cb7130643c3",
+      "title": "Сияешь 934-8777",
+      "artistId": "2a09d8ba-068e-43a5-9a2d-c07675534093",
+      "answer": "Сияешь 934-8777",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/0d/46/07/0d460704-3c95-cdb1-0b4b-c20e45fce165/mzaf_1718962489772286516.plus.aac.p.m4a"
+    },
+    {
+      "id": "b77e4117-252f-4066-9279-40ef9181e982",
+      "title": "Не везёт",
+      "artistId": "2a09d8ba-068e-43a5-9a2d-c07675534093",
+      "answer": "Не везёт",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/90/51/a4/9051a4c4-1cc4-04f6-f3af-bba3e712f389/mzaf_4192056322185312777.plus.aac.p.m4a"
+    },
+    {
+      "id": "4262a992-6c23-4a62-b68b-f08f5222f5ef",
+      "title": "Звёзды",
+      "artistId": "2a09d8ba-068e-43a5-9a2d-c07675534093",
+      "answer": "Звёзды",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/c2/06/91/c2069196-66d4-2dfb-42cb-4c202eae8fd5/mzaf_2359113092596426138.plus.aac.p.m4a"
+    },
+    {
+      "id": "8ba13736-c3d8-49bc-acee-4c28ab830e0a",
+      "title": "Хай хилс",
+      "artistId": "2a09d8ba-068e-43a5-9a2d-c07675534093",
+      "answer": "Хай хилс",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/73/72/08/73720835-7825-9210-8774-66c1fc78edb2/mzaf_2615958507595369692.plus.aac.p.m4a"
+    },
+    {
+      "id": "824dd93f-6d4d-4c4b-87c0-e38adbb22030",
+      "title": "Dreamin Freestyle",
+      "artistId": "2a09d8ba-068e-43a5-9a2d-c07675534093",
+      "answer": "Dreamin Freestyle",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/11/2e/18/112e18ef-e84b-ae6f-b59d-0ad86777109e/mzaf_1287798315611835022.plus.aac.p.m4a"
+    },
+    {
+      "id": "13972e9e-dcfc-483c-8f2e-a1b52b418c17",
+      "title": "Awful Things (feat. Lil Tracy)",
+      "artistId": "f1d6f121-58dc-496f-8daf-0f3253e22162",
+      "answer": "Awful Things (feat. Lil Tracy)",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/fc/0c/96/fc0c9634-01f7-71e4-736d-90a99c39e65b/mzaf_17947397239571893152.plus.aac.p.m4a"
+    },
+    {
+      "id": "ffba36eb-4532-4771-bd1c-73ca9d77b16e",
+      "title": "Spotlight",
+      "artistId": "f1d6f121-58dc-496f-8daf-0f3253e22162",
+      "answer": "Spotlight",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/5e/27/a4/5e27a4c6-bfa5-5c76-5d2a-418e806a3a47/mzaf_15579201775084642828.plus.aac.p.m4a"
+    },
+    {
+      "id": "9a3b27ba-bf82-4c8c-8d77-17dff3e79756",
+      "title": "witchblades",
+      "artistId": "f1d6f121-58dc-496f-8daf-0f3253e22162",
+      "answer": "witchblades",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/cc/4c/7c/cc4c7cf3-44c2-b5d4-5975-3b7c648e0f6f/mzaf_15394479141055236414.plus.aac.p.m4a"
+    },
+    {
+      "id": "faeef8fb-a9da-4496-9a7d-3fa53017e6c5",
+      "title": "Broken Smile (My All)",
+      "artistId": "f1d6f121-58dc-496f-8daf-0f3253e22162",
+      "answer": "Broken Smile (My All)",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/fb/2d/c0/fb2dc0d1-eaa1-342a-5d53-f20569c92582/mzaf_13970965145674587803.plus.aac.p.m4a"
+    },
+    {
+      "id": "406ce254-ea66-4527-a048-8b890f68ce24",
+      "title": "Me and You",
+      "artistId": "f1d6f121-58dc-496f-8daf-0f3253e22162",
+      "answer": "Me and You",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/11/c8/59/11c85927-ad80-1ad6-d935-045f0d72c8f7/mzaf_15396575405098694335.plus.aac.p.m4a"
+    },
+    {
+      "id": "6f7bf347-2761-4442-98b7-47d964bdfe5c",
+      "title": "tears",
+      "artistId": "f1d6f121-58dc-496f-8daf-0f3253e22162",
+      "answer": "tears",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/92/d5/ff/92d5ffbf-5d8d-dca0-a38e-cf48c9180e3f/mzaf_8927634929480583782.plus.aac.p.m4a"
+    },
+    {
+      "id": "1e9ee95b-b017-478e-9e54-abafdfbe4306",
+      "title": "broken smile (og version)",
+      "artistId": "f1d6f121-58dc-496f-8daf-0f3253e22162",
+      "answer": "broken smile (og version)",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/74/5e/2b/745e2b0e-57a4-dd3b-33a0-7b1e7761e34d/mzaf_14368067746306275028.plus.aac.p.m4a"
+    },
+    {
+      "id": "25aaa0cd-a27e-4352-bd49-7738a2bd335f",
+      "title": "what's uppppppxddDDD",
+      "artistId": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
+      "answer": "what's uppppppxddDDD",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/03/72/ad0372b9-54aa-88f5-3e94-ad55112f59cc/mzaf_12740394456885971027.plus.aac.p.m4a"
+    },
+    {
+      "id": "237f455c-c71e-4452-b0ff-0fd612635800",
+      "title": "Trinity",
+      "artistId": "d4a67379-9b3f-4dad-88b4-2c9461d1cd2b",
+      "answer": "Trinity",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/39/54/08/395408f9-b067-db71-3225-e3efea3306eb/mzaf_2874729607650569585.plus.aac.p.m4a"
+    },
+    {
+      "id": "6783d33c-78ab-4ae2-820b-d9327da37413",
+      "title": "haunt",
+      "artistId": "503a19db-45ab-498f-be04-6029fff8c874",
+      "answer": "haunt",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/7d/ad/c1/7dadc125-5de4-2514-fa86-602082d49967/mzaf_5790294595884607727.plus.aac.p.m4a"
+    },
+    {
+      "id": "b5f848b4-1723-4397-8339-f419e61a2dda",
+      "title": "waste",
+      "artistId": "503a19db-45ab-498f-be04-6029fff8c874",
+      "answer": "waste",
+      "audioUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/51/4b/ba/514bba73-54f8-9a1d-576f-c1ebf08cbf22/mzaf_17164276225418154076.plus.aac.p.m4a"
     }
   ],
   "settings": {
-    "rounds": 5,
-    "time": 15,
-    "name": "Игрок"
+    "rounds": 10,
+    "time": 10,
+    "name": "Босс"
   },
   "leaderboard": [
     {
       "name": "Игрок",
+      "score": 2500
+    },
+    {
+      "name": "Игрок",
+      "score": 2000
+    },
+    {
+      "name": "Игрок",
+      "score": 2000
+    },
+    {
+      "name": "Игрок",
+      "score": 1500
+    },
+    {
+      "name": "Игрок",
+      "score": 1500
+    },
+    {
+      "name": "Босс",
+      "score": 500
+    },
+    {
+      "name": "Игрок",
+      "score": 0
+    },
+    {
+      "name": "Игрок",
+      "score": 0
+    },
+    {
+      "name": "Босс",
       "score": 0
     }
   ],
   "game": {
-    "score": 0
+    "score": 500
   }
 }
