@@ -101,6 +101,20 @@ function App() {
     };
   }, [state]);
 
+  useEffect(() => {
+    if (!notification) {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      setNotification(null);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [notification]);
+
   if (!state) {
     return (
       <div className="app-loading">

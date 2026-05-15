@@ -26,7 +26,10 @@ export default function Game({ state, setState, goTo, setNotification }) {
   const [answer, setAnswer] = useState("");
   const [artistQuery, setArtistQuery] = useState("");
   const [selectedArtistId, setSelectedArtistId] = useState(null);
+  const [feedback, setFeedback] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
+  const nextRoundTimeoutRef = useRef(null);
   const hasArtistCards = state.artists.length > 0;
 
   const playableTracks = useMemo(
@@ -68,6 +71,8 @@ export default function Game({ state, setState, goTo, setNotification }) {
 
   useEffect(() => {
     setAnswer("");
+    setFeedback(null);
+    setIsPlaying(false);
 
     if (audioRef.current) {
       audioRef.current.pause();
@@ -79,12 +84,22 @@ export default function Game({ state, setState, goTo, setNotification }) {
     setRound(1);
     setScore(0);
     setAnswer("");
+    setFeedback(null);
+    setIsPlaying(false);
 
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
   }, [selectedArtistId]);
+
+  useEffect(() => {
+    return () => {
+      if (nextRoundTimeoutRef.current) {
+        clearTimeout(nextRoundTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const finishGame = (finalScore) => {
     setState((currentState) => ({
@@ -108,7 +123,10 @@ export default function Game({ state, setState, goTo, setNotification }) {
 
     const normalizedUserAnswer = normalizeAnswer(answer);
     if (!normalizedUserAnswer) {
-      setNotification({ text: "Введите ответ, прежде чем отправлять", type: "error" });
+      setFeedback({
+        type: "error",
+        text: "Введите ответ, прежде чем отправлять."
+      });
       return;
     }
 
@@ -127,19 +145,30 @@ export default function Game({ state, setState, goTo, setNotification }) {
 
     const nextScore = isCorrect ? score + 500 : score;
 
-    if (isCorrect) {
-      setNotification({ text: "Правильно!", type: "success" });
-    } else {
-      setNotification({ text: "Неверно", type: "error" });
-    }
-
     setScore(nextScore);
+    setFeedback(
+      isCorrect
+        ? {
+            type: "success",
+            text: "Правильно! +500 очков"
+          }
+        : {
+            type: "error",
+            text: `Неверно. Правильный ответ: ${track.answer || track.title}`
+          }
+    );
 
-    if (round >= maxRounds) {
-      finishGame(nextScore);
-    } else {
-      setRound(round + 1);
+    if (nextRoundTimeoutRef.current) {
+      clearTimeout(nextRoundTimeoutRef.current);
     }
+
+    nextRoundTimeoutRef.current = setTimeout(() => {
+      if (round >= maxRounds) {
+        finishGame(nextScore);
+      } else {
+        setRound((currentRound) => currentRound + 1);
+      }
+    }, 1200);
   };
 
   if (!playableTracks.length && !hasArtistCards) {
@@ -243,24 +272,40 @@ export default function Game({ state, setState, goTo, setNotification }) {
       </p>
 
       <div className="game__player">
-        <button
-          type="button"
-          onClick={() => {
-            if (!audioRef.current) {
-              return;
-            }
+        <div className="game__player-shell">
+          <button
+            type="button"
+            onClick={() => {
+              if (!audioRef.current) {
+                return;
+              }
 
-            if (audioRef.current.paused) {
-              audioRef.current.play();
-            } else {
-              audioRef.current.pause();
-            }
-          }}
-        >
-          ▶
-        </button>
+              if (audioRef.current.paused) {
+                audioRef.current.play();
+                setIsPlaying(true);
+              } else {
+                audioRef.current.pause();
+                setIsPlaying(false);
+              }
+            }}
+          >
+            {isPlaying ? "❚❚" : "▶"}
+          </button>
 
-        <audio ref={audioRef} src={track.audioUrl} preload="metadata" />
+          <div className="game__player-copy">
+            <strong>{isPlaying ? "Сейчас играет фрагмент" : "Готов к прослушиванию"}</strong>
+            <span>Нажми и угадай песню до следующего раунда.</span>
+          </div>
+        </div>
+
+        <audio
+          ref={audioRef}
+          src={track.audioUrl}
+          preload="metadata"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+        />
       </div>
 
       <form
@@ -281,6 +326,10 @@ export default function Game({ state, setState, goTo, setNotification }) {
           Ответить
         </button>
       </form>
+
+      <div className={`game__feedback ${feedback ? `is-${feedback.type}` : ""}`} aria-live="polite">
+        {feedback ? feedback.text : " "}
+      </div>
 
       <button type="button" className="game__secondary game__change-artist" onClick={() => setSelectedArtistId(null)}>
         Выбрать другого исполнителя
