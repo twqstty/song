@@ -3,9 +3,12 @@ export const initialState = {
   tracks: [],
   settings: {
     rounds: 5,
-    time: 15,
-    name: "Игрок"
+    autoPlay: true,
+    allowSkip: true,
+    showProgress: true
   },
+  players: [],
+  currentPlayer: null,
   leaderboard: [],
   game: {
     score: 0

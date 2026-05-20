@@ -55,10 +55,6 @@ function getCatalogSourceLabel(source) {
     return "iTunes preview";
   }
 
-  if (source === "deezer") {
-    return "Deezer preview";
-  }
-
   return "Внешний каталог";
 }
 
@@ -69,18 +65,8 @@ export default function Upload({ state, setState, goTo, setNotification }) {
   });
   const [catalogQuery, setCatalogQuery] = useState("");
   const [catalogArtistId, setCatalogArtistId] = useState("");
-  const [catalogSource, setCatalogSource] = useState("all");
   const [catalogResults, setCatalogResults] = useState([]);
   const [catalogLoading, setCatalogLoading] = useState(false);
-  const [artistCatalogQuery, setArtistCatalogQuery] = useState("");
-  const [artistCatalogSource, setArtistCatalogSource] = useState("all");
-  const [artistCatalogResults, setArtistCatalogResults] = useState([]);
-  const [artistCatalogLoading, setArtistCatalogLoading] = useState(false);
-  const [selectedCatalogArtist, setSelectedCatalogArtist] = useState(null);
-  const [artistTrackResults, setArtistTrackResults] = useState([]);
-  const [artistTracksLoading, setArtistTracksLoading] = useState(false);
-  const [artistTracksLoadingMore, setArtistTracksLoadingMore] = useState(false);
-  const [artistTracksNextOffset, setArtistTracksNextOffset] = useState(null);
   const [uploadArtistId, setUploadArtistId] = useState("auto");
 
   const artistTrackCounts = useMemo(() => {
@@ -183,10 +169,6 @@ export default function Upload({ state, setState, goTo, setNotification }) {
         params.set("artist", artistName);
       }
 
-      if (catalogSource) {
-        params.set("source", catalogSource);
-      }
-
       const response = await fetch(`/api/catalog/search?${params.toString()}`);
 
       if (!response.ok) {
@@ -201,81 +183,6 @@ export default function Upload({ state, setState, goTo, setNotification }) {
       setNotification({ text: "Не удалось загрузить результаты каталога", type: "error" });
     } finally {
       setCatalogLoading(false);
-    }
-  };
-
-  const searchCatalogArtists = async () => {
-    if (!artistCatalogQuery.trim()) {
-      setNotification({ text: "Введи имя исполнителя для поиска", type: "error" });
-      return;
-    }
-
-    setArtistCatalogLoading(true);
-    setSelectedCatalogArtist(null);
-    setArtistTrackResults([]);
-    setArtistTracksNextOffset(null);
-
-    try {
-      const params = new URLSearchParams();
-      params.set("q", artistCatalogQuery.trim());
-      params.set("source", artistCatalogSource);
-
-      const response = await fetch(`/api/catalog/artists?${params.toString()}`);
-
-      if (!response.ok) {
-        throw new Error("Artist catalog search failed");
-      }
-
-      const data = await response.json();
-      setArtistCatalogResults(Array.isArray(data.items) ? data.items : []);
-    } catch (error) {
-      console.error("Failed to search artists", error);
-      setArtistCatalogResults([]);
-      setNotification({ text: "Не удалось найти исполнителей", type: "error" });
-    } finally {
-      setArtistCatalogLoading(false);
-    }
-  };
-
-  const loadArtistTracks = async (artist, append = false) => {
-    const currentOffset = append ? artistTracksNextOffset || 0 : 0;
-
-    if (append) {
-      setArtistTracksLoadingMore(true);
-    } else {
-      setArtistTracksLoading(true);
-      setSelectedCatalogArtist(artist);
-      setArtistTrackResults([]);
-      setArtistTracksNextOffset(null);
-    }
-
-    try {
-      const params = new URLSearchParams();
-      params.set("source", artist.source);
-      params.set("artistId", artist.id);
-      params.set("artistName", artist.name);
-      params.set("offset", String(currentOffset));
-      params.set("limit", "30");
-
-      const response = await fetch(`/api/catalog/artist-tracks?${params.toString()}`);
-
-      if (!response.ok) {
-        throw new Error("Artist tracks search failed");
-      }
-
-      const data = await response.json();
-      const items = Array.isArray(data.items) ? data.items : [];
-
-      setArtistTrackResults((current) => (append ? [...current, ...items] : items));
-      setArtistTracksNextOffset(
-        typeof data.nextOffset === "number" ? data.nextOffset : null
-      );
-    } catch (error) {
-      console.error("Failed to load artist tracks", error);
-      setNotification({ text: "Не удалось загрузить песни исполнителя", type: "error" });
-    } finally {
-      setArtistTracksLoading(false);
-      setArtistTracksLoadingMore(false);
     }
   };
 
@@ -630,160 +537,10 @@ export default function Upload({ state, setState, goTo, setNotification }) {
       </div>
 
       <div className="upload__track-form">
-        <h2>Загрузить все песни артиста</h2>
-        <p className="upload__track-form-note">
-          Этот режим сначала находит самого исполнителя во внешнем каталоге, а потом подтягивает
-          его треки отдельным запросом. Это точнее, чем обычный поиск по названию.
-        </p>
-
-        <div className="upload__fields">
-          <label>
-            <span>Исполнитель</span>
-            <input
-              type="text"
-              value={artistCatalogQuery}
-              placeholder="Например, Kai Angel"
-              onChange={(e) => setArtistCatalogQuery(e.target.value)}
-            />
-          </label>
-
-          <label>
-            <span>Источник</span>
-            <select
-              value={artistCatalogSource}
-              onChange={(e) => setArtistCatalogSource(e.target.value)}
-            >
-              <option value="all">Все источники</option>
-              <option value="itunes">Только iTunes</option>
-              <option value="deezer">Только Deezer</option>
-            </select>
-          </label>
-        </div>
-
-        <div className="upload__actions upload__actions--inline">
-          <button type="button" onClick={searchCatalogArtists}>
-            {artistCatalogLoading ? "Ищу артиста..." : "Найти исполнителя"}
-          </button>
-        </div>
-
-        {artistCatalogResults.length ? (
-          <div className="upload__catalog-list">
-            {artistCatalogResults.map((artist) => (
-              <article key={`${artist.source}-${artist.id}`} className="upload__catalog-card">
-                <div className="upload__catalog-head">
-                  <img
-                    src={getCatalogArtworkSrc(artist)}
-                    alt={artist.name}
-                    className="upload__catalog-artwork"
-                  />
-
-                  <div>
-                    <strong>{artist.name}</strong>
-                    <span className="upload__catalog-source">
-                      {getCatalogSourceLabel(artist.source)}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="upload__helper-row">
-                  <button
-                    type="button"
-                    className="upload__primary"
-                    onClick={() => loadArtistTracks(artist)}
-                  >
-                    Показать песни
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        ) : null}
-
-        {selectedCatalogArtist ? (
-          <div className="upload__catalog-list">
-            <article className="upload__catalog-card">
-              <div className="upload__catalog-head">
-                <img
-                  src={getCatalogArtworkSrc(selectedCatalogArtist)}
-                  alt={selectedCatalogArtist.name}
-                  className="upload__catalog-artwork"
-                />
-
-                <div>
-                  <strong>{selectedCatalogArtist.name}</strong>
-                  <p>Треки исполнителя</p>
-                  <span className="upload__catalog-source">
-                    {getCatalogSourceLabel(selectedCatalogArtist.source)}
-                  </span>
-                </div>
-              </div>
-
-              {artistTracksLoading ? (
-                <p className="upload__track-form-note">Загружаю песни...</p>
-              ) : artistTrackResults.length ? (
-                <>
-                  <div className="upload__catalog-list">
-                    {artistTrackResults.map((item) => (
-                      <article key={`${selectedCatalogArtist.id}-${item.id}`} className="upload__catalog-card">
-                        <div className="upload__catalog-head">
-                          <img
-                            src={getCatalogArtworkSrc(item)}
-                            alt={item.title}
-                            className="upload__catalog-artwork"
-                          />
-
-                          <div>
-                            <strong>{item.title}</strong>
-                            <p>{item.artistName}</p>
-                            <span className="upload__catalog-source">
-                              {getCatalogSourceLabel(item.source)}
-                            </span>
-                          </div>
-                        </div>
-
-                        <audio controls src={item.audioUrl} className="upload__audio">
-                          Ваш браузер не поддерживает воспроизведение аудио.
-                        </audio>
-
-                        <div className="upload__helper-row">
-                          <button
-                            type="button"
-                            className="upload__primary"
-                            onClick={() => addCatalogTrack(item)}
-                          >
-                            Добавить в библиотеку
-                          </button>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-
-                  {artistTracksNextOffset !== null ? (
-                    <div className="upload__actions upload__actions--inline">
-                      <button
-                        type="button"
-                        onClick={() => loadArtistTracks(selectedCatalogArtist, true)}
-                      >
-                        {artistTracksLoadingMore ? "Загружаю ещё..." : "Загрузить ещё"}
-                      </button>
-                    </div>
-                  ) : null}
-                </>
-              ) : (
-                <p className="upload__track-form-note">
-                  У этого исполнителя не нашлось доступных preview-треков.
-                </p>
-              )}
-            </article>
-          </div>
-        ) : null}
-      </div>
-
-      <div className="upload__track-form">
         <h2>Найти песню в каталоге</h2>
         <p className="upload__track-form-note">
-          Поиск идёт через backend во внешние каталоги. Можно искать сразу по всем источникам
-          или оставить только один, а затем добавить трек в библиотеку по клику.
+          Поиск идёт через backend в iTunes. Найди нужный preview-трек и добавь его в библиотеку
+          по клику.
         </p>
 
         <div className="upload__fields">
@@ -806,15 +563,6 @@ export default function Upload({ state, setState, goTo, setNotification }) {
                   {artist.name}
                 </option>
               ))}
-            </select>
-          </label>
-
-          <label>
-            <span>Источник</span>
-            <select value={catalogSource} onChange={(e) => setCatalogSource(e.target.value)}>
-              <option value="all">Все источники</option>
-              <option value="itunes">Только iTunes</option>
-              <option value="deezer">Только Deezer</option>
             </select>
           </label>
         </div>
@@ -924,7 +672,7 @@ export default function Upload({ state, setState, goTo, setNotification }) {
                   value={track.answer}
                   onChange={(e) => updateTrack(track.id, { answer: e.target.value })}
                 />
-                <small>Именно это значение будет использоваться при проверке ответа.</small>
+                <small>Это название будет показано как правильный ответ.</small>
               </label>
             </article>
           ))}

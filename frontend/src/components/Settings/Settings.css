@@ -71,6 +71,10 @@
   text-align: left;
 }
 
+.settings__section-header--inline {
+  align-items: center;
+}
+
 .settings__section-header h2,
 .settings__summary h2 {
   margin: 0 0 8px;
@@ -102,7 +106,9 @@
 
 .settings__field span,
 .settings__summary-label,
-.settings__summary-grid span {
+.settings__summary-grid span,
+.settings__mini-label,
+.settings__insights span {
   color: var(--muted);
   font-size: 13px;
   text-transform: uppercase;
@@ -112,7 +118,10 @@
 .settings__field input,
 .settings__chips button,
 .settings__ticks button,
-.settings__reset {
+.settings__reset,
+.settings__preset-card,
+.settings__option-card,
+.settings__toggle {
   font: inherit;
 }
 
@@ -132,18 +141,36 @@
   box-shadow: 0 0 0 4px rgba(200, 255, 0, 0.08);
 }
 
+.settings__split {
+  display: grid;
+  gap: 22px;
+}
+
+.settings__chips,
+.settings__ticks,
+.settings__preset-grid,
+.settings__mode-grid {
+  display: grid;
+  gap: 12px;
+}
+
 .settings__chips,
 .settings__ticks {
-  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 12px;
+}
+
+.settings__preset-grid,
+.settings__mode-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
 .settings__chips button,
 .settings__ticks button,
-.settings__reset {
+.settings__reset,
+.settings__preset-card,
+.settings__option-card,
+.settings__toggle {
   border: 1px solid var(--border);
-  border-radius: 18px;
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
   cursor: pointer;
@@ -153,26 +180,114 @@
 .settings__chips button,
 .settings__ticks button {
   padding: 16px 14px;
+  border-radius: 18px;
 }
 
 .settings__chips button:hover,
 .settings__ticks button:hover,
-.settings__reset:hover {
+.settings__reset:hover,
+.settings__preset-card:hover,
+.settings__option-card:hover,
+.settings__toggle:hover {
   transform: translateY(-1px);
   border-color: rgba(200, 255, 0, 0.32);
 }
 
 .settings__chips button.is-active,
-.settings__ticks button.is-active {
+.settings__ticks button.is-active,
+.settings__preset-card.is-active,
+.settings__option-card.is-active,
+.settings__toggle.is-active {
   border-color: rgba(200, 255, 0, 0.55);
-  background: linear-gradient(135deg, rgba(200, 255, 0, 0.2), rgba(200, 255, 0, 0.06));
+  background:
+    linear-gradient(135deg, rgba(200, 255, 0, 0.16), rgba(255, 255, 255, 0.03)),
+    rgba(255, 255, 255, 0.03);
   color: var(--accent);
+}
+
+.settings__preset-card,
+.settings__option-card {
+  min-height: 150px;
+  padding: 18px;
+  border-radius: 22px;
+  text-align: left;
+}
+
+.settings__preset-card span,
+.settings__preset-card strong,
+.settings__option-card strong,
+.settings__toggle strong {
+  display: block;
+}
+
+.settings__preset-card span {
+  margin-bottom: 12px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+}
+
+.settings__preset-card strong,
+.settings__option-card strong {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: var(--text-h);
+}
+
+.settings__preset-card p,
+.settings__option-card p,
+.settings__toggle p {
+  color: var(--muted);
+  line-height: 1.55;
 }
 
 .settings__range {
   width: 100%;
   margin-bottom: 16px;
   accent-color: var(--accent);
+}
+
+.settings__toggle-list {
+  display: grid;
+  gap: 12px;
+}
+
+.settings__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  text-align: left;
+}
+
+.settings__switch {
+  width: 58px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.settings__switch span {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.settings__toggle.is-active .settings__switch {
+  background: rgba(200, 255, 0, 0.24);
+}
+
+.settings__toggle.is-active .settings__switch span {
+  transform: translateX(26px);
 }
 
 .settings__summary {
@@ -182,14 +297,25 @@
   text-align: left;
 }
 
-.settings__summary-grid {
+.settings__player-meta {
+  margin-top: -4px;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.settings__summary-grid,
+.settings__insights {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
+}
+
+.settings__summary-grid {
   margin: 24px 0;
 }
 
-.settings__summary-grid div {
+.settings__summary-grid div,
+.settings__insights div {
   padding: 18px;
   border-radius: 20px;
   background:
@@ -197,7 +323,8 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.settings__summary-grid strong {
+.settings__summary-grid strong,
+.settings__insights strong {
   display: block;
   margin-top: 10px;
   font-size: 28px;
@@ -224,10 +351,15 @@
   font-size: 12px;
 }
 
+.settings__insights {
+  margin-top: 18px;
+}
+
 .settings__reset {
   width: 100%;
   margin-top: 18px;
   padding: 16px 18px;
+  border-radius: 18px;
 }
 
 @media (max-width: 960px) {
@@ -251,15 +383,20 @@
     border-radius: 22px;
   }
 
-  .settings__section-header {
+  .settings__section-header,
+  .settings__toggle {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .settings__section-header strong {
     min-width: auto;
   }
 
-  .settings__summary-grid {
+  .settings__summary-grid,
+  .settings__insights,
+  .settings__preset-grid,
+  .settings__mode-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -16,3 +16,122 @@
   place-items: center;
   color: var(--muted);
 }
+
+.registration {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(200, 255, 0, 0.16), transparent 28%),
+    radial-gradient(circle at 82% 76%, rgba(255, 61, 110, 0.18), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 42%);
+}
+
+.registration__card {
+  width: min(620px, 100%);
+  padding: clamp(28px, 6vw, 54px);
+  border: 1px solid var(--border);
+  border-radius: 34px;
+  background: rgba(19, 19, 26, 0.9);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+}
+
+.registration__eyebrow {
+  margin-bottom: 14px;
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.registration__card h1 {
+  max-width: 520px;
+  margin-bottom: 18px;
+  font-size: clamp(40px, 9vw, 68px);
+  line-height: 0.92;
+}
+
+.registration__lead {
+  max-width: 500px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.registration__form {
+  display: grid;
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.registration__form label {
+  display: grid;
+  gap: 10px;
+}
+
+.registration__form span {
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.registration__form input {
+  width: 100%;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+}
+
+.registration__form button {
+  padding: 18px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #111;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.registration__accounts {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.registration__accounts > span {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.registration__accounts div {
+  display: grid;
+  gap: 8px;
+}
+
+.registration__accounts button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.registration__accounts small {
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

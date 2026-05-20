@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "./Game.css";
 
 const ARTIST_PLACEHOLDER = "/artists/placeholder.svg";
+const ROUND_TIME_SECONDS = 10;
+const POINTS_PER_CORRECT = 300;
 
 function normalizeAnswer(value) {
   return value
@@ -23,6 +25,7 @@ function getArtistImageSrc(image) {
 export default function Game({ state, setState, goTo, setNotification }) {
   const [round, setRound] = useState(1);
   const [score, setScore] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS);
   const [answer, setAnswer] = useState("");
   const [artistQuery, setArtistQuery] = useState("");
   const [selectedArtistId, setSelectedArtistId] = useState(null);
@@ -31,6 +34,8 @@ export default function Game({ state, setState, goTo, setNotification }) {
   const audioRef = useRef(null);
   const nextRoundTimeoutRef = useRef(null);
   const hasArtistCards = state.artists.length > 0;
+  const currentPlayer = state.currentPlayer || {};
+  const playerName = currentPlayer.name || "Игрок";
 
   const playableTracks = useMemo(
     () => state.tracks.filter((track) => track.audioUrl && track.answer.trim() && track.title.trim()),
@@ -62,36 +67,112 @@ export default function Game({ state, setState, goTo, setNotification }) {
   const selectedTracks = selectedArtist?.tracks || [];
   const maxRounds = Math.min(state.settings.rounds, selectedTracks.length);
   const track = selectedTracks[round - 1];
+  const progressPercent = Math.max(0, (timeLeft / ROUND_TIME_SECONDS) * 100);
 
-  useEffect(() => {
-    if (selectedArtistId && !artists.some((artist) => artist.id === selectedArtistId)) {
-      setSelectedArtistId(null);
-    }
-  }, [artists, selectedArtistId]);
-
-  useEffect(() => {
+  const resetRoundState = () => {
     setAnswer("");
     setFeedback(null);
     setIsPlaying(false);
+    setTimeLeft(ROUND_TIME_SECONDS);
 
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
-  }, [round]);
+  };
 
-  useEffect(() => {
+  const startArtistSession = (artistId) => {
+    setSelectedArtistId(artistId);
     setRound(1);
     setScore(0);
-    setAnswer("");
-    setFeedback(null);
-    setIsPlaying(false);
+    resetRoundState();
+  };
 
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+  useEffect(() => {
+    if (!selectedArtist || !track || feedback) {
+      return undefined;
     }
-  }, [selectedArtistId]);
+
+    const intervalId = window.setInterval(() => {
+      setTimeLeft((current) => {
+        if (current <= 1) {
+          window.clearInterval(intervalId);
+          setFeedback({
+            type: "error",
+            text: `Время вышло. Правильный ответ: ${track.answer || track.title}`,
+            advance: true
+          });
+          return 0;
+        }
+
+        return current - 1;
+      });
+    }, 1000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [selectedArtist, track, feedback]);
+
+  useEffect(() => {
+    if (!state.settings.autoPlay || !track || !audioRef.current) {
+      return;
+    }
+
+    const playPromise = audioRef.current.play();
+
+    if (playPromise?.catch) {
+      playPromise.catch(() => {});
+    }
+  }, [track, round, state.settings.autoPlay]);
+
+  useEffect(() => {
+    if (!feedback?.advance) {
+      return;
+    }
+
+    if (nextRoundTimeoutRef.current) {
+      clearTimeout(nextRoundTimeoutRef.current);
+    }
+
+    nextRoundTimeoutRef.current = setTimeout(() => {
+      if (round >= maxRounds) {
+        setState((currentState) => ({
+          ...currentState,
+          game: {
+            score
+          },
+          leaderboard: [...currentState.leaderboard, {
+            playerId: currentState.currentPlayer?.id || currentPlayer.id,
+            name: currentState.currentPlayer?.name || playerName,
+            role: currentState.currentPlayer?.role || currentPlayer.role || "user",
+            score
+          }].sort((a, b) => b.score - a.score)
+        }));
+
+        goTo("result");
+        return;
+      }
+
+      setAnswer("");
+      setFeedback(null);
+      setIsPlaying(false);
+      setTimeLeft(ROUND_TIME_SECONDS);
+
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+
+      setRound((currentRound) => currentRound + 1);
+    }, 1200);
+
+    return () => {
+      if (nextRoundTimeoutRef.current) {
+        clearTimeout(nextRoundTimeoutRef.current);
+      }
+    };
+  }, [currentPlayer.id, currentPlayer.role, feedback, goTo, maxRounds, playerName, round, score, setState]);
 
   useEffect(() => {
     return () => {
@@ -101,31 +182,17 @@ export default function Game({ state, setState, goTo, setNotification }) {
     };
   }, []);
 
-  const finishGame = (finalScore) => {
-    setState((currentState) => ({
-      ...currentState,
-      game: {
-        score: finalScore
-      },
-      leaderboard: [...currentState.leaderboard, {
-        name: currentState.settings.name,
-        score: finalScore
-      }].sort((a, b) => b.score - a.score)
-    }));
-
-    goTo("result");
-  };
-
-  const submitAnswer = (answer) => {
+  const submitAnswer = (value) => {
     if (!track) {
       return;
     }
 
-    const normalizedUserAnswer = normalizeAnswer(answer);
+    const normalizedUserAnswer = normalizeAnswer(value);
     if (!normalizedUserAnswer) {
       setFeedback({
         type: "error",
-        text: "Введите ответ, прежде чем отправлять."
+        text: "Введите ответ, прежде чем отправлять.",
+        advance: false
       });
       return;
     }
@@ -139,36 +206,40 @@ export default function Game({ state, setState, goTo, setNotification }) {
       .filter(Boolean);
 
     const isCorrect = validAnswers.some(
-      (validAnswer) =>
-        normalizedUserAnswer.includes(validAnswer) || validAnswer.includes(normalizedUserAnswer)
+      (validAnswer) => normalizedUserAnswer.includes(validAnswer) || validAnswer.includes(normalizedUserAnswer)
     );
 
-    const nextScore = isCorrect ? score + 500 : score;
+    const nextScore = isCorrect ? score + POINTS_PER_CORRECT : score;
 
-    setScore(nextScore);
+    if (isCorrect) {
+      setScore(nextScore);
+    }
+
     setFeedback(
       isCorrect
         ? {
             type: "success",
-            text: "Правильно! +500 очков"
+            text: `Правильно! +${POINTS_PER_CORRECT} очков`,
+            advance: true
           }
         : {
             type: "error",
-            text: `Неверно. Правильный ответ: ${track.answer || track.title}`
+            text: `Неверно. Правильный ответ: ${track.answer || track.title}`,
+            advance: true
           }
     );
+  };
 
-    if (nextRoundTimeoutRef.current) {
-      clearTimeout(nextRoundTimeoutRef.current);
+  const skipRound = () => {
+    if (!track) {
+      return;
     }
 
-    nextRoundTimeoutRef.current = setTimeout(() => {
-      if (round >= maxRounds) {
-        finishGame(nextScore);
-      } else {
-        setRound((currentRound) => currentRound + 1);
-      }
-    }, 1200);
+    setFeedback({
+      type: "error",
+      text: `Раунд пропущен. Это был трек: ${track.answer || track.title}`,
+      advance: true
+    });
   };
 
   if (!playableTracks.length && !hasArtistCards) {
@@ -221,7 +292,7 @@ export default function Game({ state, setState, goTo, setNotification }) {
                     return;
                   }
 
-                  setSelectedArtistId(artist.id);
+                  startArtistSession(artist.id);
                 }}
               >
                 <img
@@ -253,6 +324,25 @@ export default function Game({ state, setState, goTo, setNotification }) {
         <span>Раунд {round} / {maxRounds}</span>
         <strong>{score} очков</strong>
       </div>
+
+      {state.settings.showProgress && (
+        <div className="game__status">
+          <div className="game__status-grid">
+            <div className="game__status-card">
+              <span>Осталось времени</span>
+              <strong>{timeLeft} сек</strong>
+            </div>
+            <div className="game__status-card">
+              <span>Цена ответа</span>
+              <strong>{POINTS_PER_CORRECT} pts</strong>
+            </div>
+          </div>
+
+          <div className="game__timer" aria-hidden="true">
+            <span style={{ width: `${progressPercent}%` }} />
+          </div>
+        </div>
+      )}
 
       <div className="game__artist-pill">
         <img
@@ -294,7 +384,11 @@ export default function Game({ state, setState, goTo, setNotification }) {
 
           <div className="game__player-copy">
             <strong>{isPlaying ? "Сейчас играет фрагмент" : "Готов к прослушиванию"}</strong>
-            <span>Нажми и угадай песню до следующего раунда.</span>
+            <span>
+              {state.settings.autoPlay
+                ? "Автостарт включён, но ты всегда можешь поставить трек на паузу."
+                : "Нажми play и угадай песню до конца таймера."}
+            </span>
           </div>
         </div>
 
@@ -327,11 +421,24 @@ export default function Game({ state, setState, goTo, setNotification }) {
         </button>
       </form>
 
+      {state.settings.allowSkip && (
+        <button type="button" className="game__secondary game__skip" onClick={skipRound}>
+          Пропустить раунд
+        </button>
+      )}
+
       <div className={`game__feedback ${feedback ? `is-${feedback.type}` : ""}`} aria-live="polite">
         {feedback ? feedback.text : " "}
       </div>
 
-      <button type="button" className="game__secondary game__change-artist" onClick={() => setSelectedArtistId(null)}>
+      <button
+        type="button"
+        className="game__secondary game__change-artist"
+        onClick={() => {
+          setSelectedArtistId(null);
+          resetRoundState();
+        }}
+      >
         Выбрать другого исполнителя
       </button>
     </div>

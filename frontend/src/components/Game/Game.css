@@ -46,6 +46,54 @@
   color: var(--accent);
 }
 
+.game__status {
+  margin: 0 auto 22px;
+}
+
+.game__status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.game__status-card {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(19, 19, 26, 0.86);
+  border: 1px solid var(--border);
+}
+
+.game__status-card span {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.game__status-card strong {
+  color: var(--text-h);
+  font-size: 22px;
+}
+
+.game__timer {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.game__timer span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 1s linear;
+}
+
 .game__hint {
   max-width: 520px;
   margin: 0 auto 24px;
@@ -268,6 +316,10 @@
   color: var(--text);
 }
 
+.game__skip {
+  margin-bottom: 14px;
+}
+
 .game__feedback {
   min-height: 52px;
   max-width: 520px;
@@ -307,7 +359,8 @@
 
   .game__artist-grid,
   .game__artist-toolbar,
-  .game__form {
+  .game__form,
+  .game__status-grid {
     grid-template-columns: 1fr;
   }
 

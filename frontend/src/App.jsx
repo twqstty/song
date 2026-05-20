@@ -13,12 +13,15 @@ import "./App.css";
 
 const API_BASE = "/api";
 
+function createPlayerId() {
+  return globalThis.crypto?.randomUUID?.() || `player-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
 function App() {
   const [page, setPage] = useState("home");
   const [state, setState] = useState(null);
   const [notification, setNotification] = useState(null);
-
-  const goTo = (p) => setPage(p);
+  const [registrationName, setRegistrationName] = useState("");
 
   useEffect(() => {
     let isActive = true;
@@ -44,8 +47,13 @@ function App() {
           tracks: Array.isArray(remoteState.tracks) ? remoteState.tracks : initialState.tracks,
           settings: {
             ...initialState.settings,
-            ...(remoteState.settings || {})
+            rounds: remoteState.settings?.rounds || initialState.settings.rounds,
+            autoPlay: remoteState.settings?.autoPlay ?? initialState.settings.autoPlay,
+            allowSkip: remoteState.settings?.allowSkip ?? initialState.settings.allowSkip,
+            showProgress: remoteState.settings?.showProgress ?? initialState.settings.showProgress
           },
+          players: Array.isArray(remoteState.players) ? remoteState.players : initialState.players,
+          currentPlayer: remoteState.currentPlayer || initialState.currentPlayer,
           leaderboard: Array.isArray(remoteState.leaderboard)
             ? remoteState.leaderboard
             : initialState.leaderboard,
@@ -123,20 +131,146 @@ function App() {
     );
   }
 
+  const registerPlayer = (event) => {
+    event.preventDefault();
+
+    const name = registrationName.trim().replace(/\s+/g, " ");
+
+    if (!name) {
+      setNotification({
+        text: "Введите имя, чтобы начать игру.",
+        type: "error"
+      });
+      return;
+    }
+
+    setState((currentState) => {
+      const role = currentState.players.length ? "user" : "admin";
+      const player = {
+        id: createPlayerId(),
+        name: name.slice(0, 20),
+        role,
+        registeredAt: new Date().toISOString()
+      };
+
+      return {
+        ...currentState,
+        players: [...currentState.players, player],
+        currentPlayer: player
+      };
+    });
+    setRegistrationName("");
+  };
+
+  const loginAsPlayer = (playerId) => {
+    const player = state.players.find((item) => item.id === playerId);
+
+    if (!player) {
+      return;
+    }
+
+    setState((currentState) => ({
+      ...currentState,
+      currentPlayer: player
+    }));
+  };
+
+  const logoutPlayer = () => {
+    setPage("home");
+    setState((currentState) => ({
+      ...currentState,
+      currentPlayer: null
+    }));
+  };
+
+  if (!state.currentPlayer?.name) {
+    return (
+      <>
+        <main className="registration">
+          <section className="registration__card">
+            <p className="registration__eyebrow">SOUNDQUIZ ACCESS</p>
+            <h1>Представься перед входом</h1>
+            <p className="registration__lead">
+              Имя сохранится на сервере и будет использоваться в результатах и таблице лидеров.
+              Старый leaderboard уже можно начать заново с чистого листа.
+            </p>
+
+            <form className="registration__form" onSubmit={registerPlayer}>
+              <label>
+                <span>Имя игрока</span>
+                <input
+                  type="text"
+                  value={registrationName}
+                  maxLength={20}
+                  autoFocus
+                  placeholder="Например, Босс"
+                  onChange={(event) => setRegistrationName(event.target.value)}
+                />
+              </label>
+
+              <button type="submit">Войти на сайт</button>
+            </form>
+
+            {state.players.length ? (
+              <div className="registration__accounts">
+                <span>Уже созданные аккаунты</span>
+                <div>
+                  {state.players.map((player) => (
+                    <button
+                      key={player.id}
+                      type="button"
+                      onClick={() => loginAsPlayer(player.id)}
+                    >
+                      <strong>{player.name}</strong>
+                      <small>{player.role}</small>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </section>
+        </main>
+
+        <Notification data={notification} />
+      </>
+    );
+  }
+
+  const isAdmin = state.currentPlayer?.role === "admin";
+  const safeGoTo = (nextPage) => {
+    if (nextPage === "upload" && !isAdmin) {
+      setNotification({
+        text: "Раздел загрузки доступен только администратору.",
+        type: "error"
+      });
+      setPage("home");
+      return;
+    }
+
+    setPage(nextPage);
+  };
+
+  const visiblePage = page === "upload" && !isAdmin ? "home" : page;
+
   return (
     <>
-      <Header goTo={goTo} current={page} />
+      <Header
+        goTo={safeGoTo}
+        current={visiblePage}
+        currentPlayer={state.currentPlayer}
+        onLogout={logoutPlayer}
+      />
 
-      {page === "home" && <Home goTo={goTo} />}
-      {page === "upload" && (
-        <Upload state={state} setState={setState} goTo={goTo} setNotification={setNotification} />
+      {visiblePage === "home" && <Home goTo={safeGoTo} isAdmin={isAdmin} />}
+      {visiblePage === "upload" && isAdmin && (
+        <Upload state={state} setState={setState} goTo={safeGoTo} setNotification={setNotification} />
       )}
-      {page === "game" && (
-        <Game state={state} setState={setState} goTo={goTo} setNotification={setNotification} />
+      {visiblePage === "game" && (
+        <Game state={state} setState={setState} goTo={safeGoTo} setNotification={setNotification} />
       )}
-      {page === "leaderboard" && <Leaderboard state={state} />}
-      {page === "settings" && <Settings state={state} setState={setState} />}
-      {page === "result" && <Result state={state} goTo={goTo} />}
+      {visiblePage === "leaderboard" && <Leaderboard state={state} />}
+      {visiblePage === "settings" && <Settings state={state} setState={setState} />}
+      {visiblePage === "result" && <Result state={state} goTo={safeGoTo} />}
 
       <Notification data={notification} />
     </>

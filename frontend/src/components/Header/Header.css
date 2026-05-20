@@ -10,12 +10,25 @@ nav {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 800;
   font-size: 20px;
 }
 
 .logo span {
   color: var(--accent);
+}
+
+.logo small {
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .nav-tabs {
@@ -42,6 +55,18 @@ nav {
   background: var(--surface2);
 }
 
+.nav-logout {
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 61, 110, 0.38);
+  border-radius: 8px;
+  background: rgba(255, 61, 110, 0.1);
+  color: #ff8aa6;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 @media (max-width: 760px) {
   nav {
     padding: 14px 16px;
@@ -55,5 +80,9 @@ nav {
 
   .nav-tabs {
     justify-content: center;
+  }
+
+  .nav-logout {
+    width: 100%;
   }
 }

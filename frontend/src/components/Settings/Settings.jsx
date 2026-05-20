@@ -1,7 +1,43 @@
 import "./Settings.css";
 
 const roundOptions = [3, 5, 7, 10];
-const timeOptions = [10, 15, 20, 30];
+const roundTimeSeconds = 10;
+const pointsPerCorrect = 300;
+const presets = [
+  {
+    id: "blitz",
+    title: "Blitz",
+    description: "",
+    patch: {
+      rounds: 3,
+      autoPlay: true,
+      allowSkip: false,
+      showProgress: true
+    }
+  },
+  {
+    id: "classic",
+    title: "Classic",
+    description: "",
+    patch: {
+      rounds: 5,
+      autoPlay: true,
+      allowSkip: true,
+      showProgress: true
+    }
+  },
+  {
+    id: "deep-cut",
+    title: "Deep Cut",
+    description: "",
+    patch: {
+      rounds: 10,
+      autoPlay: false,
+      allowSkip: true,
+      showProgress: true
+    }
+  }
+];
 
 export default function Settings({ state, setState }) {
   const settings = state.settings;
@@ -16,21 +52,47 @@ export default function Settings({ state, setState }) {
     });
   };
 
+  const updatePlayerName = (name) => {
+    const normalizedName = name.slice(0, 20);
+    const currentPlayer = state.currentPlayer
+      ? {
+          ...state.currentPlayer,
+          name: normalizedName
+        }
+      : null;
+
+    setState({
+      ...state,
+      currentPlayer,
+      players: currentPlayer
+        ? state.players.map((player) =>
+            player.id === currentPlayer.id ? currentPlayer : player
+          )
+        : state.players
+    });
+  };
+
   const resetSettings = () => {
     updateSettings({
       rounds: 5,
-      time: 15,
-      name: "Игрок"
+      autoPlay: true,
+      allowSkip: true,
+      showProgress: true
     });
   };
+
+  const activePreset = presets.find((preset) =>
+    Object.entries(preset.patch).every(([key, value]) => settings[key] === value)
+  );
+  const totalPotentialScore = settings.rounds * pointsPerCorrect;
 
   return (
     <section className="settings">
       <div className="settings__hero">
-        <p className="settings__eyebrow">Настройки игры</p>
-        <h1>Собери свой режим</h1>
+        <p className="settings__eyebrow">Control Room</p>
+        <h1>Полное меню настройки матча</h1>
         <p className="settings__lead">
-          Выбери темп игры, количество раундов и имя, которое увидят в таблице лидеров.
+          Настрой формат игры под себя
         </p>
       </div>
 
@@ -39,8 +101,33 @@ export default function Settings({ state, setState }) {
           <div className="settings__section">
             <div className="settings__section-header">
               <div>
+                <h2>Готовые пресеты</h2>
+                <p>Быстрый старт для разных сценариев игры.</p>
+              </div>
+              <strong>{activePreset ? activePreset.title : "Custom"}</strong>
+            </div>
+
+            <div className="settings__preset-grid">
+              {presets.map((preset) => (
+                <button
+                  key={preset.id}
+                  type="button"
+                  className={`settings__preset-card ${activePreset?.id === preset.id ? "is-active" : ""}`}
+                  onClick={() => updateSettings(preset.patch)}
+                >
+                  <span>{preset.title}</span>
+                  <strong>{preset.patch.rounds} раундов</strong>
+                  <p>{preset.description}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="settings__section">
+            <div className="settings__section-header">
+              <div>
                 <h2>Профиль игрока</h2>
-                <p>Имя сохранится в результатах и лидерборде.</p>
+                <p>Имя попадёт в результаты и в таблицу лидеров.</p>
               </div>
             </div>
 
@@ -49,13 +136,9 @@ export default function Settings({ state, setState }) {
               <input
                 type="text"
                 maxLength={20}
-                value={settings.name}
+                value={state.currentPlayer?.name || ""}
                 placeholder="Введите имя"
-                onChange={(e) =>
-                  updateSettings({
-                    name: e.target.value.slice(0, 20)
-                  })
-                }
+                onChange={(e) => updatePlayerName(e.target.value)}
               />
             </label>
           </div>
@@ -63,58 +146,81 @@ export default function Settings({ state, setState }) {
           <div className="settings__section">
             <div className="settings__section-header">
               <div>
-                <h2>Раунды</h2>
-                <p>Короткая партия или полноценный забег.</p>
+                <h2>Формат матча</h2>
+                <p>Длина сессии. Таймер всегда 10 секунд, правильный ответ всегда даёт 300 очков.</p>
               </div>
-              <strong>{settings.rounds}</strong>
+              <strong>{totalPotentialScore}</strong>
             </div>
 
-            <div className="settings__chips">
-              {roundOptions.map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  className={settings.rounds === option ? "is-active" : ""}
-                  onClick={() => updateSettings({ rounds: option })}
-                >
-                  {option} раундов
-                </button>
-              ))}
+            <div className="settings__split">
+              <div>
+                <p className="settings__mini-label">Раунды</p>
+                <div className="settings__chips">
+                  {roundOptions.map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      className={settings.rounds === option ? "is-active" : ""}
+                      onClick={() => updateSettings({ rounds: option })}
+                    >
+                      {option} раундов
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="settings__mini-label">Фиксированные правила</p>
+                <div className="settings__chips">
+                  <button type="button" className="is-active">
+                    {roundTimeSeconds} сек
+                  </button>
+                  <button type="button" className="is-active">
+                    {pointsPerCorrect} pts
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="settings__section">
             <div className="settings__section-header">
               <div>
-                <h2>Время на ответ</h2>
-                <p>Сколько секунд даём на угадывание трека.</p>
+                <h2>Поведение раунда</h2>
+                <p>Переключатели, которые влияют на темп самой игры.</p>
               </div>
-              <strong>{settings.time} сек</strong>
             </div>
 
-            <input
-              className="settings__range"
-              type="range"
-              min={10}
-              max={30}
-              step={5}
-              value={settings.time}
-              onChange={(e) =>
-                updateSettings({
-                  time: Number(e.target.value)
-                })
-              }
-            />
-
-            <div className="settings__ticks">
-              {timeOptions.map((option) => (
+            <div className="settings__toggle-list">
+              {[
+                {
+                  key: "autoPlay",
+                  title: "Автостарт превью",
+                  description: "Новый фрагмент запускается сам при старте раунда."
+                },
+                {
+                  key: "allowSkip",
+                  title: "Разрешить пропуск",
+                  description: "Показывает кнопку skip, если трек не узнаётся."
+                },
+                {
+                  key: "showProgress",
+                  title: "Показывать прогресс",
+                  description: "На экране игры будут таймер и статус текущего режима."
+                }
+              ].map((item) => (
                 <button
-                  key={option}
+                  key={item.key}
                   type="button"
-                  className={settings.time === option ? "is-active" : ""}
-                  onClick={() => updateSettings({ time: option })}
+                  className={`settings__toggle ${settings[item.key] ? "is-active" : ""}`}
+                  onClick={() => updateSettings({ [item.key]: !settings[item.key] })}
                 >
-                  {option}s
+                  <div>
+                    <strong>{item.title}</strong>
+                    <p>{item.description}</p>
+                  </div>
+                  <span className="settings__switch" aria-hidden="true">
+                    <span />
+                  </span>
                 </button>
               ))}
             </div>
@@ -122,31 +228,40 @@ export default function Settings({ state, setState }) {
         </div>
 
         <aside className="settings__summary">
-          <p className="settings__summary-label">Превью</p>
-          <h2>{settings.name}</h2>
+          <p className="settings__summary-label">Live Summary</p>
+          <h2>{state.currentPlayer?.name || "Игрок"}</h2>
 
           <div className="settings__summary-grid">
             <div>
-              <span>Раундов</span>
-              <strong>{settings.rounds}</strong>
+              <span>Формат</span>
+              <strong>{settings.rounds}x{roundTimeSeconds}</strong>
             </div>
             <div>
-              <span>На ответ</span>
-              <strong>{settings.time} сек</strong>
+              <span>Награда</span>
+              <strong>{pointsPerCorrect}</strong>
+            </div>
+            <div>
+              <span>Пропуск</span>
+              <strong>{settings.allowSkip ? "On" : "Off"}</strong>
             </div>
           </div>
 
           <div className="settings__mode">
-            <span className="settings__mode-badge">
-              {settings.time <= 10 ? "Hardcore" : settings.time <= 20 ? "Classic" : "Chill"}
-            </span>
+            <span className="settings__mode-badge">{activePreset ? activePreset.title : "Custom"}</span>
             <p>
-              {settings.time <= 10
-                ? "Быстрый режим для тех, кто узнаёт трек с первой секунды."
-                : settings.time <= 20
-                  ? "Сбалансированный режим для обычной игры с друзьями."
-                  : "Спокойный режим, когда хочется больше времени на обсуждение."}
+              Время и очки теперь фиксированные: 10 секунд на раунд и 300 очков за правильный ответ.
             </p>
+          </div>
+
+          <div className="settings__insights">
+            <div>
+              <span>Макс. счёт</span>
+              <strong>{totalPotentialScore}</strong>
+            </div>
+            <div>
+              <span>Темп</span>
+              <strong>Быстрый</strong>
+            </div>
           </div>
 
           <button type="button" className="settings__reset" onClick={resetSettings}>

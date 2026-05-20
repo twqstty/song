@@ -1,11 +1,15 @@
 import "./Header.css";
 
-export default function Header({ goTo, current }) {
-  const tabs = ["home", "upload", "game", "leaderboard", "settings"];
+export default function Header({ goTo, current, currentPlayer, onLogout }) {
+  const isAdmin = currentPlayer?.role === "admin";
+  const tabs = ["home", ...(isAdmin ? ["upload"] : []), "game", "leaderboard", "settings"];
 
   return (
     <nav>
-      <div className="logo">🎵 <span>SOUND</span>QUIZ</div>
+      <div className="logo">
+        🎵 <span>SOUND</span>QUIZ
+        <small>{currentPlayer?.role || "user"}</small>
+      </div>
 
       <ul className="nav-tabs">
         {tabs.map(tab => (
@@ -19,6 +23,10 @@ export default function Header({ goTo, current }) {
           </li>
         ))}
       </ul>
+
+      <button type="button" className="nav-logout" onClick={onLogout}>
+        Выйти
+      </button>
     </nav>
   );
 }
