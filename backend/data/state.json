@@ -293,49 +293,48 @@
     }
   ],
   "settings": {
-    "rounds": 10,
-    "time": 10,
-    "name": "Босс"
+    "rounds": 3,
+    "time": 15,
+    "name": "Игрок",
+    "autoPlay": true,
+    "allowSkip": false,
+    "showProgress": true
   },
   "leaderboard": [
     {
-      "name": "Игрок",
-      "score": 2500
+      "playerId": "8c509f19-81df-4e84-a50f-a36428cd7f7c",
+      "name": "Леон",
+      "role": "user",
+      "score": 300
     },
     {
-      "name": "Игрок",
-      "score": 2000
-    },
-    {
-      "name": "Игрок",
-      "score": 2000
-    },
-    {
-      "name": "Игрок",
-      "score": 1500
-    },
-    {
-      "name": "Игрок",
-      "score": 1500
-    },
-    {
-      "name": "Босс",
-      "score": 500
-    },
-    {
-      "name": "Игрок",
-      "score": 0
-    },
-    {
-      "name": "Игрок",
-      "score": 0
-    },
-    {
-      "name": "Босс",
+      "playerId": "player-admin-001",
+      "name": "Чемпион",
+      "role": "admin",
       "score": 0
     }
   ],
   "game": {
-    "score": 500
+    "score": 300
+  },
+  "players": [
+    {
+      "id": "player-admin-001",
+      "name": "Чемпион",
+      "role": "admin",
+      "registeredAt": "2026-05-19T13:31:17.137Z"
+    },
+    {
+      "id": "8c509f19-81df-4e84-a50f-a36428cd7f7c",
+      "name": "Леон",
+      "role": "user",
+      "registeredAt": "2026-05-20T12:16:04.929Z"
+    }
+  ],
+  "currentPlayer": {
+    "id": "player-admin-001",
+    "name": "Чемпион",
+    "role": "admin",
+    "registeredAt": "2026-05-19T13:31:17.137Z"
   }
 }

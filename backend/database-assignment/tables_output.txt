@@ -1,0 +1,2 @@
+artists          player_settings  session_tracks 
+game_sessions    players          tracks         

@@ -1,0 +1,52 @@
+CREATE TABLE players (
+  player_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  player_name VARCHAR(50) NOT NULL UNIQUE,
+  role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('admin', 'user')),
+  registered_at TEXT NOT NULL
+);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE player_settings (
+  player_id INTEGER PRIMARY KEY,
+  rounds_count INTEGER NOT NULL CHECK (rounds_count BETWEEN 1 AND 20),
+  round_time_sec INTEGER NOT NULL CHECK (round_time_sec BETWEEN 5 AND 120),
+  points_per_correct INTEGER NOT NULL CHECK (points_per_correct >= 100),
+  answer_mode TEXT NOT NULL CHECK (answer_mode IN ('flex', 'strict')),
+  auto_play INTEGER NOT NULL CHECK (auto_play IN (0, 1)),
+  allow_skip INTEGER NOT NULL CHECK (allow_skip IN (0, 1)),
+  show_progress INTEGER NOT NULL CHECK (show_progress IN (0, 1)),
+  FOREIGN KEY (player_id) REFERENCES players (player_id) ON DELETE CASCADE
+);
+CREATE TABLE artists (
+  artist_id TEXT PRIMARY KEY,
+  artist_name VARCHAR(100) NOT NULL UNIQUE,
+  image_path TEXT
+);
+CREATE TABLE tracks (
+  track_id TEXT PRIMARY KEY,
+  artist_id TEXT NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  correct_answer VARCHAR(200) NOT NULL,
+  audio_url TEXT NOT NULL,
+  FOREIGN KEY (artist_id) REFERENCES artists (artist_id) ON DELETE RESTRICT
+);
+CREATE TABLE game_sessions (
+  session_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  player_id INTEGER NOT NULL,
+  played_at TEXT NOT NULL,
+  rounds_planned INTEGER NOT NULL CHECK (rounds_planned BETWEEN 1 AND 20),
+  total_score INTEGER NOT NULL CHECK (total_score >= 0),
+  status TEXT NOT NULL CHECK (status IN ('finished', 'cancelled')),
+  FOREIGN KEY (player_id) REFERENCES players (player_id) ON DELETE CASCADE
+);
+CREATE TABLE session_tracks (
+  session_track_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  session_id INTEGER NOT NULL,
+  track_id TEXT NOT NULL,
+  round_number INTEGER NOT NULL CHECK (round_number BETWEEN 1 AND 20),
+  is_correct INTEGER NOT NULL CHECK (is_correct IN (0, 1)),
+  awarded_points INTEGER NOT NULL CHECK (awarded_points >= 0),
+  FOREIGN KEY (session_id) REFERENCES game_sessions (session_id) ON DELETE CASCADE,
+  FOREIGN KEY (track_id) REFERENCES tracks (track_id) ON DELETE RESTRICT,
+  UNIQUE (session_id, round_number),
+  UNIQUE (session_id, track_id)
+);
